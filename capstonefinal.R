@@ -1,13 +1,13 @@
 # set up workspace
-setwd("~")
-source("tpsetup.R")
 library("ngram")
 library("dplyr")
 library("ggplot2")
 library("tm")
-library("wordcloud")
+
 
 # load samples to predict from
+download.file("http://github.com/vedrury/capstone/raw/master/samples.zip",destfile = "samples.zip")
+unzip("samples.zip")
 samples<-readLines("samples.txt",encoding = "UTF-8")
 
 # text prediction function
@@ -112,11 +112,7 @@ result
 
 
 
-
-
-
-
-# text prediction word plot  function
+# text prediction word plot function
 # this is the same as tp but outputs wordplot of up to 25 candidates 
 # for next word vs mean score for that word
 tpwordplot<-function(sentence) {

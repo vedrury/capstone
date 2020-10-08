@@ -1,10 +1,18 @@
 # add libraries, download data
-setwd("~")
 library("shiny")
 library("shinythemes")
-source("capstonefinal.R")
-# Server.R
+library("ngram")
+library("dplyr")
+library("ggplot2")
+library("markdown")
+library("rmarkdown")
+library("tm")
 
+unzip("samples.zip")
+   
+source("capstonefinal.R")
+
+# Server.R
 server<-shinyServer(function(input, output, session) {
   result<-reactive({tp(input$intext)})
     output$result<-result
@@ -50,7 +58,6 @@ server<-shinyServer(function(input, output, session) {
 
 
 # ui.R
-# Define UI for application that draws a histogram
 ui<-shinyUI(fluidPage(
     theme=shinytheme("sandstone"),
 
@@ -87,11 +94,11 @@ ui<-shinyUI(fluidPage(
            tabPanel(h5(tags$b("Word Plot")), p(),
                plotOutput("wordplot")),
             
-            tabPanel(h5(tags$b("Presentation")),p(),
-           includeMarkdown("~/README.Rpres")),
+          tabPanel(h5(tags$b("Presentation")),p(),
+         includeMarkdown("README.md")),
            
-            tabPanel(h5(tags$b("Code")), p(), 
-           includeMarkdown("~/capstonefinal.Rmd"))  
+           tabPanel(h5(tags$b("Code")), p() 
+          , includeMarkdown("capstonefinal.Rmd"))  
             ))
 
         )

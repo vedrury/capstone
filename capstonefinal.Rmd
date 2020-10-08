@@ -1,16 +1,23 @@
+---
+title: "capstonefinal"
+author: "Vanessa Drury"
+date: "10/7/2020"
+output: html_document
+---
 
 ### tp function
 ```{r, tp function, result="hide", message=F, warning=F}
 # set up workspace
 setwd("~")
-source("tpsetup.R")
 library("ngram")
 library("dplyr")
 library("ggplot2")
 library("tm")
-library("wordcloud")
+
 
 # load samples to predict from
+download.file("http://github.com/vedrury/capstone/raw/master/samples.zip",destfile = "samples.zip")
+unzip("samples.zip")
 samples<-readLines("samples.txt",encoding = "UTF-8")
 
 # text prediction function
@@ -112,14 +119,11 @@ result<-(unlist(strsplit("the to and a of"," ")))
 
 result
 }}
-
 ```
 
-
-
-### tpwordplot function
-```{r tpwordplot, result="hide", message=F, warning=F}
-# text prediction word plot  function
+## tpwordplot function
+```{r, tpwordplot function, result="hide", message=F, warning=F}
+# text prediction word plot function
 # this is the same as tp but outputs wordplot of up to 25 candidates 
 # for next word vs mean score for that word
 tpwordplot<-function(sentence) {

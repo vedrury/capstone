@@ -1,0 +1,50 @@
+JHU Data Science Final Capstone Project
+========================================================
+title: "capstonefinal"  
+author: Vanessa Drury   
+date: October 7, 2020   
+autosize: true
+- <a href="https://vedrury.shinyapps.io/capstonefinalapp/" target="_top"/>ShinyApp</a>  
+- <a href="http://www.github.com/vedrury/capstone" target="_top"/>Github Repo</a>
+
+Capstone Project Overview
+========================================================
+
+<small>The goal of the capstone project for JHU's Data Science course is to create a text prediction model from a predetermined dataset. This requires a reasonably solid understanding of [natural language processing](https://en.wikipedia.org/wiki/Natural_language_processing) and, for our purposes, the concept of [ngrams](https://en.wikipedia.org/wiki/N-gram). 
+
+After obtaining, cleaning, and sampling the data, described briefly next, a unique predictive model was created as the function tp.</small>
+
+Data Processing
+========================================================
+
+<small>Text data from three sources, Twitter, blogs, and news sites, is downloaded. Then a randomized tenth of the source is sampled and these samples are combined into a master sample.
+
+```r
+set.seed(1239)
+bsample<-sample(blogs,size=round(length(blogs)/10),replace=F)
+tsample<-sample(twitter,size=round(length(twitter)/10),replace=F)
+nsample<-sample(news,size=round(length(news)/10),replace=F)
+samples<-c(bsample,tsample,nsample)
+```
+
+This master sample is processed to remove profanity, non-alphabetic characters, hyperlinks, and excess whitespace, all of which would offer little useful contextual information for text prediction. I decided to include "stop words" as these can predict very common phrases.</small>
+
+tp Function
+========================================================
+<small>The tp function utilizes a basic principle of the Stupid-Backoff Algorithm: more frequent, higher-order ngrams are most useful for prediction. The function utilizes the ngrams library and get.phrasetable function to predict possible next words. 
+
+Depending on the length of the "sentence" argument, successive "ends" of the phrase/sentence are processed in parallel to capture as accurate of a prediction as possible.
+
+"Ends" as long as 4 words are evaluated; thus tp evaluates unigrams, bigrams, trigrams, tetragrams, and quintagrams, the candidate words of which are weighted increasingly heavily..
+
+In the absence of sentence input or in the rare case of no predictions, the function returns the 5 most frequent unigrams from the sample.</small>
+
+Shiny App
+========================================================
+<small>You are welcome to try the tp function <a href="https://vedrury.shinyapps.io/capstonefinalapp/" target="_top"/>here</a>!
+
+Enter your sentence or phrase of interest and the app will display the most likely 5 possible following words as determined by the tp function.
+
+By clicking on the "possible next words" buttons, you can add a word to the sentence input and re-predict!
+
+Note: due to the large sample size, which was found to be necessary for improved prediction accuracy, the app may take some time to process.</small>
